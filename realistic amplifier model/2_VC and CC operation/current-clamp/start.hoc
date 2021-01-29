@@ -1,0 +1,106 @@
+load_file("nrngui.hoc")
+load_file("CC.ses")
+load_file("filter_settings.hoc")
+load_file("custominit.hoc")
+
+
+
+//plots for the model amplifier voltage signal
+objref Greal, Greal_zoomed
+Greal=new Graph()
+Greal.unmap()
+Greal.view(0, -15, 800, 20, 450, 10, 450, 300)
+Greal.addvar("V_CC", &LinearCircuit[0].V_out_filtered, 2,3)
+
+
+Greal_zoomed=new Graph()
+Greal_zoomed.unmap()
+Greal_zoomed.view(20, -15, 30, 20, 1000, 10, 300, 300)
+Greal_zoomed.addvar("V_CC", &LinearCircuit[0].V_out_filtered, 2,3)
+
+graphList[0].append(Greal)
+graphList[0].append(Greal_zoomed)
+
+Greal.size(0,800,-30, 5)
+Greal_zoomed.size(20,40,-30, 5)
+
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////////
+
+
+proc set_CPN(){// capacitance neutralization. The argument is the desired compensation in pF
+desired_CPN=$01*0.965
+if (desired_CPN == 0){
+LinearCircuit[0].Acpn_Gain=(1e-9/1000)/LinearCircuit[0].Ccpn
+}else{
+LinearCircuit[0].Acpn_Gain=(desired_CPN/1000)/LinearCircuit[0].Ccpn
+}
+}
+
+proc set_BB(){// bridge balance compensation. The argument is the desired compensation in MOhm.
+desired_BB=$01
+if (desired_BB == 0){
+LinearCircuit[0].A_BB_Gain=1e-9
+}else{
+LinearCircuit[0].A_BB_Gain=desired_BB
+}
+}
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//////////////////////GUI//////////////////////////////////////////
+
+proc whole_cell(){
+LinearCircuit[0].C_pip=.004
+LinearCircuit[0].R_access=10
+LinearCircuit[0].C_cell=0.033
+LinearCircuit[0].R_cell=500
+}
+
+
+
+xpanel("modellcell configurations")
+
+				xlabel("default values are:")
+				xlabel("C_pip:4 pF, R_access: 10 MOhm")	
+				xlabel("C_cell:33 pF, R_cell: 500 MOhm")		
+				xlabel("you can play with it:")		
+				xvalue("C_pip (nF)", "LinearCircuit[0].C_pip")	
+				xvalue("R_access (MOhm)", "LinearCircuit[0].R_access")	
+				xvalue("C_cell (nF)", "LinearCircuit[0].C_cell")				
+				xvalue("R_cell (MOhm)", "LinearCircuit[0].R_cell")		
+				xlabel("")								
+				xlabel("compensatory mechanisms:")	
+				xlabel("set_BB()")
+				xlabel("the argument is the desired bridge setting in MOhm")
+				
+				xlabel("set_CPN()")					
+				xlabel("the argument is the desired capacitance neutralization in pF")			
+
+xpanel(10,140)
+
+xpanel("analog filter")
+				xlabel("analog filter set")			
+				xlabel("four-pole Bessel")				
+                xbutton("100 kHz","set_filter(100,100)")
+				xbutton("30 kHz","set_filter(30,30)")
+                xbutton("20 kHz","set_filter(20,20)")
+				xbutton("15 kHz","set_filter(15,15)")				
+                xbutton("10 kHz","set_filter(10,10)")
+				xbutton("8 kHz","set_filter(8,8)")				
+                xbutton("6 kHz","set_filter(6,6)")
+				xbutton("4 kHz","set_filter(4,4)")				
+                xbutton("2 kHz","set_filter(2,2)")
+				xbutton("1 ","set_filter(1,1)")
+		
+xpanel(10,580)
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+set_filter(100,100)
+dt=0.004  
+ 

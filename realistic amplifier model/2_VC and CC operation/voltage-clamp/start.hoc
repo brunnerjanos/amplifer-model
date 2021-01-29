@@ -1,0 +1,133 @@
+load_file("nrngui.hoc")
+load_file("VC.ses")
+load_file("filter_settings.hoc")
+
+
+
+//plots for the model amplifier voltage signal
+objref Greal
+Greal=new Graph()
+Greal.unmap()
+Greal.view(8, -15, 6, 22, 300, 10, 500, 300)
+Greal.addvar("V_Imon", &LinearCircuit[0].V_Imon_boosted_filtered, 2,3) //with the conversion factor of 1 V/nA
+
+graphList[0].append(Greal)
+
+
+Greal.size(0,25,-1000, 200)
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+proc set_Cp_fast(){//apply Cpfast compensation. 1st argument is the desired compensation in pF, 2nd arg is the time constant for compensation
+if (CPfast<=0){LinearCircuit[0].A_fast_Gain=1e-9
+}else{
+LinearCircuit[0].A_fast_Gain=CPfast/16.15}
+LinearCircuit[0].R_fast=CPfast_tau
+}
+proc set_Cp_slow(){//apply Cpslow compensation. 1st argument is the desired compensation in pF, 2nd arg is the time constant for compensation
+if (CPslow==0){LinearCircuit[0].A_slow_Gain=1e-9
+}else{
+LinearCircuit[0].A_slow_Gain=CPslow/16.15/6}
+LinearCircuit[0].R_slow=CPslow_tau
+}
+
+proc set_Cp_comp(){//combined Cpfast/Cpslow compensation 
+CPfast=$01
+CPfast_tau=$02
+CPslow=$03
+CPslow_tau=$04
+set_Cp_fast()
+set_Cp_slow()
+}
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//////////////////////GUI//////////////////////////////////////////
+
+
+proc headstage_only(){
+LinearCircuit[0].C_pip=0
+LinearCircuit[0].R_access=1e6
+LinearCircuit[0].C_cell=0
+LinearCircuit[0].R_cell=1e-6
+Greal.size(0,25,-1500, 200)
+}
+
+proc bath(){
+LinearCircuit[0].C_pip=.004
+LinearCircuit[0].R_access=10
+LinearCircuit[0].C_cell=0
+LinearCircuit[0].R_cell=1e-6
+Greal.size(0,25,-1500, 200)
+}
+
+proc on_cell(){
+LinearCircuit[0].C_pip=.004
+LinearCircuit[0].R_access=1e4
+LinearCircuit[0].C_cell=0
+LinearCircuit[0].R_cell=1e-6
+Greal.size(0,25,-400, 100)
+}
+
+proc whole_cell(){
+LinearCircuit[0].C_pip=.004
+LinearCircuit[0].R_access=10
+LinearCircuit[0].C_cell=0.033
+LinearCircuit[0].R_cell=500
+Greal.size(0,25,-600, 100)
+}
+
+xpanel("modellcell configurations")
+
+
+				
+				
+                xbutton("headstage_only","headstage_only()")
+				xlabel("you can eliminate transients using")
+				xlabel("set_Cp_comp(1.62,.65,0,0)")				
+                xbutton("bath","bath()")
+				xlabel("")
+				xlabel("")	
+                xbutton("on-cell","on_cell()")
+				xlabel("C_pip:4 pF, R_seal: 10 GOhm")					
+				xlabel("you can eliminate transients using")
+				xlabel("set_Cp_comp(5.62,.65,0,0)")	
+                xbutton("whole-cell","whole_cell()")
+				xlabel("default values are:")
+				xlabel("C_pip:4 pF, R_access: 10 MOhm")	
+				xlabel("C_cell:33 pF, R_cell: 500 MOhm")		
+				xlabel("you can play with it:")					
+				xvalue("R_access (MOhm)", "LinearCircuit[0].R_access")	
+				xvalue("C_cell (nF)", "LinearCircuit[0].C_cell")				
+				xvalue("R_cell (MOhm)", "LinearCircuit[0].R_cell")		
+				
+xpanel(10,200)
+
+xpanel("analog filter")
+				xlabel("analog filter set")			
+				xlabel("four-pole Bessel")				
+                xbutton("100 kHz","set_filter(100)")
+				xbutton("30 kHz","set_filter(30)")
+                xbutton("20 kHz","set_filter(20)")
+				xbutton("15 kHz","set_filter(15)")				
+                xbutton("10 kHz","set_filter(10)")
+				xbutton("8 kHz","set_filter(8)")				
+                xbutton("6 kHz","set_filter(6)")
+				xbutton("4 kHz","set_filter(4)")				
+                xbutton("2 kHz","set_filter(2)")
+				xbutton("1 ","set_filter(1)")
+		
+xpanel(1000,600)
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+set_filter(100)

@@ -1,0 +1,267 @@
+
+load_file("../AP_generator/bjd1375.hoc")
+load_file("../AP_generator/CC.ses")
+load_file("../AP_generator/filter_settings.hoc")
+load_file("../AP_generator/settrace.hoc")
+
+
+
+
+
+
+
+//insert mechanisms
+forall{
+ insert hh_mod
+ insert pas
+ gnabar_hh_mod = 0
+ gl_hh_mod = 0
+ Ra=260 
+ cm=1
+ g_pas=1/45185
+ e_pas=-86
+ nseg = int((L/(0.1*lambda_f(5000))+.999)/2)*2 + 1 
+ }
+
+
+
+//define pseudo-variables
+
+ihold = 0
+vsK = 20 
+vsNa = 20
+gK = 300
+gNa = 320
+ihold = -0.46
+scK = 1
+scNa = 1
+
+
+objref holding
+shaft[29] holding = new i_hold(0.73) //i_hold is a point process which inject constant current onto the structure. works with custominit
+holding.i_holding=0
+
+
+
+//function to set parameters. It will be called within the init() 
+proc setvar(){
+
+  forall{
+  insert pas
+  Ra=147.3
+  cm=0.65021161
+  g_pas=1.6665043e-005
+  e_pas=-80
+  ena = 70
+
+    gnabar_hh_mod = gNa
+    gkbar_hh_mod=gK
+	v_shift_na_hh_mod = vsNa
+    v_shift_k_hh_mod = vsK
+	scale_k_hh_mod = scK
+    scale_na_act_hh_mod = scNa
+    scale_na_inact_hh_mod = scNa
+
+
+    } 
+
+	LinearCircuit[0].R_pip_adjust=31.156+Rrest
+	holding.i_holding = calc_ihold()
+	ek = -93
+}
+
+//from the custominit.hoc
+INITDUR = 350
+
+
+proc init() { local temp
+    
+  setvar()
+
+
+	{dt = 0.05}
+  finitialize(v_init)
+  t = -2*INITDUR // jump to a time "before" 0
+  temp = cvode.active()
+  if (temp != 0) { // if cvode is on, turn it off
+    cvode.active(0)
+    {dt = 0.05}
+  }
+  while (t < -INITDUR) {
+    fadvance()
+  }
+  if (temp != 0) { cvode.active(1) } // turn cvode back on if necessary
+  t = 0
+  {dt = 0.004}
+  if (cvode.active()) {
+    cvode.re_init()
+  } else {
+    fcurrent()
+  }
+  frecord_init()
+
+}
+
+
+
+
+proc set_CPN(){// capacitance neutralization. The argument is the desired compensation in pF
+desired_CPN=$01
+if (desired_CPN == 0){
+LinearCircuit[0].Acpn_Gain=(1e-9/1000)/LinearCircuit[0].Ccpn
+}else{
+LinearCircuit[0].Acpn_Gain=((desired_CPN/1000)/LinearCircuit[0].Ccpn)*0.965//see documentation of v7 CC
+}
+
+}
+
+proc set_BB(){// bridge balance compensation. The argument is the desired compensation in MOhm.
+desired_BB=$01
+if (desired_BB == 0){
+LinearCircuit[0].A_BB_Gain=1e-9
+}else{
+LinearCircuit[0].A_BB_Gain=desired_BB
+}
+}
+
+
+//recording conditions
+set_filter(100,100)
+set_BB(185)
+set_CPN(7)
+LinearCircuit[0].Rseal=65640
+
+
+//to actualize pseudo-variables, and CPN
+proc fill_params(){
+APID=$01
+gNa = $02
+gK = $03
+
+vsNa = $04
+vsK = $05
+
+scK = $06
+scNa = $07
+
+Rrest= $08
+
+
+
+if (APID<60){set_CPN(7)}
+if (APID<30){set_CPN(6.5)}
+if (APID>59){set_CPN(7.386)}
+}
+
+
+proc setchannels(){
+if	($01== 0 ){ fill_params(0, 0.16235 , 0.00575 , 13.09366 , 3.54095 , 19.48461 , 14.30498 , 3.3789 )}
+if ($01== 1 ){ fill_params(1, 0.16108 , 0.00622 , 12.45535 , 3.18641 , 22.3898 , 13.00132 , 0.01003 )}
+if ($01== 2 ){ fill_params(2, 0.16699 , 0.00611 , 13.4186 , 4.06107 , 21.06491 , 13.53313 , 0.01003 )}
+if ($01== 3 ){ fill_params(3, 0.17218 , 0.00576 , 12.88688 , 2.44737 , 18.22671 , 14.659 , 2.3499 )}
+if ($01== 4 ){ fill_params(4, 0.15631 , 0.00584 , 12.53208 , 3.08066 , 19.3543 , 13.14048 , 0.01003 )}
+if ($01== 5 ){ fill_params(5, 0.14346 , 0.00535 , 11.54787 , 1.00032 , 16.64569 , 12.36387 , 4.59801 )}
+if ($01== 6 ){ fill_params(6, 0.18195 , 0.00614 , 13.71069 , 4.10228 , 21.1276 , 14.92305 , 0.01003 )}
+if ($01== 7 ){ fill_params(7, 0.17373 , 0.00605 , 13.63139 , 4.22816 , 19.27798 , 14.61452 , 0.01003 )}
+if ($01== 8 ){ fill_params(8, 0.16021 , 0.00646 , 12.434 , 3.28447 , 22.75761 , 12.3294 , 0.01003 )}
+if ($01== 9 ){ fill_params(9, 0.15539 , 0.00589 , 11.83291 , 1.25288 , 19.24859 , 12.45566 , 0.01003 )}
+if ($01== 10 ){ fill_params(50, 0.15656 , 0.00549 , 14.37654 , 3.99063 , 12.714 , 13.51125 , 12.23256 )}
+if ($01== 11 ){ fill_params(51, 0.14894 , 0.00548 , 13.89975 , 4.49277 , 13.35278 , 12.85505 , 16.53741 )}
+if ($01== 12 ){ fill_params(52, 0.14483 , 0.00542 , 14.06199 , 4.91031 , 12.78517 , 13.13273 , 12.19906 )}
+if ($01== 13 ){ fill_params(53, 0.15641 , 0.0055 , 14.39109 , 4.8154 , 12.72696 , 13.96726 , 16.54217 )}
+if ($01== 14 ){ fill_params(54, 0.15793 , 0.00527 , 14.66206 , 4.51123 , 12.9331 , 14.10072 , 14.99157 )}
+if ($01== 15 ){ fill_params(55, 0.14222 , 0.00539 , 14.1216 , 5.01022 , 13.30369 , 12.30904 , 10.93764 )}
+if ($01== 16 ){ fill_params(56, 0.15285 , 0.00564 , 13.72517 , 3.63541 , 13.87258 , 12.57382 , 15.52437 )}
+if ($01== 17 ){ fill_params(57, 0.15863 , 0.00546 , 13.76215 , 3.66227 , 13.16585 , 13.60216 , 16.05879 )}
+if ($01== 18 ){ fill_params(58, 0.1597 , 0.00536 , 14.34776 , 4.16855 , 12.66402 , 13.98485 , 16.93704 )}
+if ($01== 19 ){ fill_params(59, 0.15229 , 0.00518 , 13.71448 , 2.99137 , 12.83151 , 13.1962 , 14.30763 )}
+if ($01== 20 ){ fill_params(80, 0.15026 , 0.00612 , 15.65301 , 13.21591 , 9.42488 , 17.46817 , 12.49415 )}
+if ($01== 21 ){ fill_params(81, 0.14748 , 0.00597 , 15.61015 , 11.98472 , 9.53834 , 16.65152 , 16.79521 )}
+if ($01== 22 ){ fill_params(82, 0.15971 , 0.00564 , 14.57085 , 5.72786 , 7.99268 , 17.95749 , 19.49725 )}
+if ($01== 23 ){ fill_params(83, 0.16337 , 0.00655 , 17.15695 , 15.23301 , 8.64847 , 19.55006 , 13.19985 )}
+if ($01== 24 ){ fill_params(84, 0.16558 , 0.00665 , 17.4004 , 16.09656 , 8.45589 , 20.41015 , 13.3025 )}
+if ($01== 25 ){ fill_params(85, 0.1458 , 0.00648 , 15.53055 , 14.99337 , 8.67802 , 17.67518 , 14.87642 )}
+if ($01== 26 ){ fill_params(86, 0.15635 , 0.00605 , 16.6796 , 12.39197 , 9.00151 , 18.30708 , 8.39891 )}
+if ($01== 27 ){ fill_params(87, 0.16992 , 0.00547 , 14.6161 , 1.00894 , 6.5309 , 19.3643 , 20.87761 )}
+if ($01== 28 ){ fill_params(88, 0.1675 , 0.00555 , 14.88292 , 1.14794 , 5.86071 , 18.43126 , 13.11794 )}
+if ($01== 29 ){ fill_params(89, 0.16476 , 0.00689 , 16.73481 , 16.34682 , 8.50331 , 20.36388 , 10.97757 )}
+setting_trace($01)//read the actual recording
+}               
+
+
+//plot of the local and measured voltage signals overlaid with the experimental data:
+objref Gmeasured, Gcurrent,Gnative 
+Gmeasured=new Graph()
+Gmeasured.unmap()
+Gmeasured.view(4, 10, -90, 120, 200, 10, 450, 300)
+Gmeasured.addvar("recorded voltage", &LinearCircuit[0].V_out_filtered, 2,3)
+Gmeasured.addvar("local voltage", &shaft[29].v(0.730769), 5,3)
+
+//plot of local Na and K currents in the axon
+Gcurrent=new Graph()
+Gcurrent.unmap()
+Gcurrent.view(4, 10, -90, 120, 200, 500, 450, 300)
+Gcurrent.addvar("I Na", &shaft[29].ina(0.730769), 3,3)
+Gcurrent.addvar("I K", &shaft[29].ik(0.730769), 7,3)
+Gcurrent.size(2,9,-1.4, 1)
+
+//plot of the voltage in a realtively distant axonal segment 
+Gnative=new Graph()
+Gnative.unmap()
+Gnative.view(4, -90, -90, 120, 850, 10, 450, 300)
+Gnative.addvar("voltage at remote axon", &shaft[45].v(0.5), 4,3)
+
+
+graphList[0].append(Gmeasured)
+graphList[0].append(Gcurrent)
+graphList[0].append(Gnative)
+
+
+proc record_AP(){
+setchannels($01)
+	
+vecy.plot(Gmeasured,dt)
+Gmeasured.size(2,9,vecy.min()-10, vecy.max()+20)
+Gnative.size(2,9,vecy.min()-10, vecy.max()+20)
+
+}
+
+
+ 
+
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//////////////////////GUI//////////////////////////////////////////
+
+xpanel("reconstructed APs and conductances")
+
+				xlabel("you can call an AP with the record_AP() function")
+				xlabel("in which the argument is the number of the desired AP")
+				xlabel("from 0 to 	9 --- APs recorded with CPN=6.5 pF")	
+				xlabel("from 10 to 19 --- APs recorded with CPN=7 pF")
+				xlabel("from 20 to 29 --- APs recorded with CPN=7.386 pF")
+				xlabel("calling the record_AP() function automatically adjust")
+				xlabel("compensations to the experimentally-set level")	
+				xlabel("bridge-balance compensation was 185 MOhm in throughout the experiment")					
+				xlabel("you can play with compensations using ")			
+				xlabel("set_BB()")
+				xlabel("the argument is the desired bridge setting in MOhm")
+				xlabel("and")				
+				xlabel("set_CPN()")					
+				xlabel("the argument is the desired capacitance neutralization in pF")			
+
+xpanel(850,500)
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+access shaft[29]
+tstop=20
+dt=.004
+
+

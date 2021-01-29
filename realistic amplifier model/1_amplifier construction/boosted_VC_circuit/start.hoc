@@ -1,0 +1,31 @@
+load_file("nrngui.hoc")
+load_file("VC_boost.ses")
+load_file("filter_settings.hoc")
+
+
+
+//plot for the model amplifier current signal overlaid with the experimental data:
+objref Greal, Vreal, real_data
+Greal=new Graph()
+Greal.unmap()
+Greal.view(8, -15, 6, 22, 300, 10, 500, 300)
+Greal.addvar("Imon (pA)", &LinearCircuit[0].V_Imon, 2,3) //with the conversion factor of 1 V/nA
+Greal.addvar("Imon_boosted_filtered (pA)", &LinearCircuit[0].V_Imon_boosted_filtered, 4,3)//with the conversion factor of 1 V/nA
+
+graphList[0].append(Greal)
+
+
+//read experimental data
+proc get_real_data(){
+Vreal = new Vector()		
+real_data=new File()
+real_data.ropen("recorded_data.dat")
+Vreal.scanf(real_data)
+Vreal.plot(Greal,.004)
+}
+
+get_real_data()
+Greal.size(7.55,8,Vreal.min()-3, Vreal.max()+3)
+
+
+set_filter(100)

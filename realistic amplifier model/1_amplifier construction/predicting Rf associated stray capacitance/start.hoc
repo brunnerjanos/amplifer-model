@@ -1,0 +1,75 @@
+load_file("nrngui.hoc")
+load_file("Co_Rf.ses")
+load_file("filter_settings.hoc")
+load_file("custominit.hoc")
+
+//plot for the model amplifier voltage signal overlaid with the experimental data:
+objref Greal, Vreal, real_data
+Greal=new Graph()
+Greal.unmap()
+Greal.view(8, -15, 6, 22, 300, 10, 500, 300)
+Greal.addvar("V_CC", &LinearCircuit[0].V_out_filtered, 2,3)
+
+
+//read experimental data
+proc get_real_data(){
+dt=.004
+Vreal = new Vector()		
+real_data=new File()
+real_data.ropen($s01)
+Vreal.scanf(real_data)
+Vreal.plot(Greal,dt)
+}
+
+graphList[0].append(Greal)
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//callable functions to read different experimental data, and to set C2 with the 
+//actual bridge balance and capacitance neutralization within the model. 
+//also set the window that shows the voltage signals 
+
+proc real1(){
+get_real_data("R1=20_C1=0_R2=0_C2=0_woBB_woCPN.dat")
+LinearCircuit[0].R_load=20
+LinearCircuit[0].Cpar_R_load=.00032
+Greal.size(8,14,-15, 7)
+}
+
+proc real2(){
+get_real_data("R1=50_C1=0_R2=0_C2=0_woBB_woCPN.dat")
+LinearCircuit[0].R_load=50
+LinearCircuit[0].Cpar_R_load=.00048421
+Greal.size(8,14,-16, 5)
+}
+
+proc real3(){
+get_real_data("R1=100_C1=0_R2=0_C2=0_woBB_woCPN.dat")
+LinearCircuit[0].R_load=100
+LinearCircuit[0].Cpar_R_load=.000536424
+Greal.size(8,14,-23, 3)
+}
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//////////////////////GUI//////////////////////////////////////////
+
+xpanel("realdata ")
+				xvalue("value of Cstray (nF)", "LinearCircuit[0].C_stray")
+				xlabel("Cstray is 0.00038 pF in the final model")
+                xbutton("Rload=20 MOhm","real1()")  	
+                xbutton("Rload=50 MOhm","real2()")  
+                xbutton("Rload=100 MOhm","real3()")  
+
+		
+xpanel(10,200)
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+set_filter(100,100)
+tstop=14
+dt=0.004
+
+LinearCircuit[0].C_stray= 0 //best fit value 0.0003826

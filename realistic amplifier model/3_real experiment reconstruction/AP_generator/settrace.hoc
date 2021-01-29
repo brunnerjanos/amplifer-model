@@ -1,0 +1,243 @@
+objref f1, vecx, vecy, vec1
+
+f1 = new File()
+vec1 = new Vector()
+vecx = new Vector()
+vecy = new Vector()
+
+
+proc setting_trace(){
+	vecx.resize(0)
+	vecy.resize(0)
+
+	if ($1 == 0){
+		f1.ropen("../AP_generator/real data/6o5_0.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.14
+	}
+
+	if ($1 == 1){
+		f1.ropen("../AP_generator/real data/6o5_1.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 2){
+		f1.ropen("../AP_generator/real data/6o5_2.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 3){
+		f1.ropen("../AP_generator/real data/6o5_3.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 4){
+		f1.ropen("../AP_generator/real data/6o5_4.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 5){
+		f1.ropen("../AP_generator/real data/6o5_5.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 6){
+		f1.ropen("../AP_generator/real data/6o5_6.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 7){
+		f1.ropen("../AP_generator/real data/6o5_7.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 8){
+		f1.ropen("../AP_generator/real data/6o5_8.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 9){
+		f1.ropen("../AP_generator/real data/6o5_9.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1 = 5.18
+	}
+
+	if ($1 == 10){
+		f1.ropen("../AP_generator/real data/7_20.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.62
+	}
+
+	if ($1 == 11){
+		f1.ropen("../AP_generator/real data/7_21.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.604
+	}
+
+	if ($1 == 12){
+		f1.ropen("../AP_generator/real data/7_22.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.584
+	}
+
+	if ($1 == 13){
+		f1.ropen("../AP_generator/real data/7_23.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.48
+	}
+
+	if ($1 == 14){
+		f1.ropen("../AP_generator/real data/7_24.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.476
+	}
+
+	if ($1 == 15){
+		f1.ropen("../AP_generator/real data/7_25.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.648
+	}
+
+	if ($1 == 16){
+		f1.ropen("../AP_generator/real data/7_26.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.6
+	}
+
+	if ($1 == 17){
+		f1.ropen("../AP_generator/real data/7_27.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.648
+	}
+
+	if ($1 == 18){
+		f1.ropen("../AP_generator/real data/7_28.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.624
+	}
+
+	if ($1 == 19){
+		f1.ropen("../AP_generator/real data/7_29.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.54
+	}
+	
+	if ($1 == 20){
+		f1.ropen("../AP_generator/real data/7o386_20.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.044
+	}
+
+	if ($1 == 21){
+		f1.ropen("../AP_generator/real data/7o386_21.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.164
+	}
+
+	if ($1 == 22){
+		f1.ropen("../AP_generator/real data/7o386_22.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.144
+	}
+
+	if ($1 == 23){
+		f1.ropen("../AP_generator/real data/7o386_23.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.212
+	}
+
+
+	if ($1 == 24){
+		f1.ropen("../AP_generator/real data/7o386_24.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.028
+	}
+
+	if ($1 == 25){
+		f1.ropen("../AP_generator/real data/7o386_25.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 4.964
+	}
+
+	if ($1 == 26){
+		f1.ropen("../AP_generator/real data/7o386_26.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 4.832
+	}
+
+	if ($1 == 27){
+		f1.ropen("../AP_generator/real data/7o386_27.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 4.72
+	}
+
+	if ($1 == 28){
+		f1.ropen("../AP_generator/real data/7o386_28.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.116
+	}
+
+	if ($1 == 29){
+		f1.ropen("../AP_generator/real data/7o386_29.dat")
+		vec1.scanf(f1)
+		f1.close()
+		bound1= 5.064
+	}
+
+
+	for i=0, vec1.size()-1{
+		if(i%2 == 0){
+			vecx.append(vec1.x[i])
+		}else{vecy.append(vec1.x[i])}
+	}
+
+
+	
+}	
+
+
+
+
+func calc_ihold(){
+
+		mp = vecy.mean(425,650)
+		ihold = (mp + 74.6745)/4.8944
+		return ihold
+	}

@@ -1,0 +1,38 @@
+proc set_filter(){local a, b, c, d, e, f, g, h
+
+Imonfilter= 100//default
+Imonfilter =$1
+
+if(Imonfilter == 100){	a=5.42e-3	b=.188	c=.11	d=.011	e=8.58e-3	f=.114	g=.1	h=0.01}
+if(Imonfilter == 30){	a=5.49e-3 b=.191 c=.36 d=.036 e=8.66e-3 f=.115 g=.33 h=0.033}	
+if(Imonfilter == 28){	a=5.46e-3 b=.189 c=.39 d=.039 e=8.51e-3 f=.114 g=.36 h=0.036}
+if(Imonfilter == 26){	a=5.34e-3 b=.185 c=.43 d=.043 e=8.46e-3 f=.113 g=.39 h=0.039}
+if(Imonfilter == 24){	a=5.29e-3 b=.183 c=.47 d=.047 e=8.32e-3 f=.111 g=.43 h=0.043}	
+if(Imonfilter == 22){	a=5.32e-3 b=.184 c=.51 d=.051 e=8.3e-3 f=.111 g=.47 h=0.047}
+if(Imonfilter == 20){	a=5.33e-3 b=.185 c=.56 d=.056 e=8.41e-3 f=.112 g=.51 h=0.051}
+if(Imonfilter == 18){	a=5.35e-3 b=.185 c=.62 d=.062 e=8.51e-3 f=.114 g=.56 h=0.056}
+if(Imonfilter == 16){	a=5.48e-3 b=.19 c=.68 d=.068 e=8.65e-3 f=.115 g=.62 h=0.062}
+if(Imonfilter == 14){	a=5.2e-3 b=.18 c=.82 d=.082 e=9.01e-3 f=.12 g=.68 h=0.068}
+if(Imonfilter == 12){	a=5.46e-3 b=.189 c=.91 d=.091 e=8.72e-3 f=.116 g=.82 h=0.082}
+if(Imonfilter == 10){	a=5.97e-3 b=.207 c=1 d=.1 e=8.58e-3 f=.114 g=1 h=.1}
+if(Imonfilter == 8){	a=7.46e-3 b=.259 c=1 d=.1 e=.0107 f=.143 g=1 h=.1}
+if(Imonfilter == 6){	a=9.94e-3 b=.345 c=1 d=.1 e=.0143 f=.191 g=1 h=.1}
+if(Imonfilter == 4){	a=0.0149 b=.517 c=1 d=.1 e=0.0215 f=.286 g=1 h=.1}
+if(Imonfilter == 3){	a=0.0199 b=.69 c=1 d=.1 e=0.0286 f=.381 g=1 h=.1}
+if(Imonfilter == 2){	a=.0298 b=1.03 c=1 d=.1 e=.0429 f=.572 g=1 h=.1}
+if(Imonfilter == 1){	a=.0542 b=1.88 c=1.1 d=.11 e=0.0858 f=1.14 g=1 h=.1}
+if(Imonfilter == .5){	a=0.0542 b=1.88 c=2.2 d=.22.1 e=0.0858 f=1.14 g=2 h=.22}
+
+	LinearCircuit[0].Rf_I_1a=a
+	LinearCircuit[0].Rf_I_1b=b
+	LinearCircuit[0].Cf_I_1a=c
+	LinearCircuit[0].Cf_I_1b=d
+	LinearCircuit[0].Rf_I_2a=e
+	LinearCircuit[0].Rf_I_2b=f
+	LinearCircuit[0].Cf_I_2a=g
+	LinearCircuit[0].Cf_I_2b=h
+	
+
+}	
+
+	

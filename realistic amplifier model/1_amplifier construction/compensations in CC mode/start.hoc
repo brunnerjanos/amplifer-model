@@ -1,0 +1,275 @@
+load_file("nrngui.hoc")
+load_file("BB_CPN.ses")
+load_file("filter_settings.hoc")
+load_file("custominit.hoc")
+
+//plot for the model amplifier voltage signal overlaid with the experimental data:
+objref Greal, Vreal, real_data
+Greal=new Graph()
+Greal.unmap()
+Greal.view(8, -15, 6, 22, 300, 10, 500, 300)
+Greal.addvar("V_CC", &LinearCircuit[0].V_out_filtered, 2,3)
+
+
+//read experimental data
+proc get_real_data(){
+dt=.004
+Vreal = new Vector()		
+real_data=new File()
+real_data.ropen($s01)
+Vreal.scanf(real_data)
+Vreal.plot(Greal,dt)
+}
+
+graphList[0].append(Greal)
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//callable functions to read different experimental data, and to set C2 with the 
+//actual bridge balance and capacitance neutralization within the model. 
+//also set the window that shows the voltage signals 
+
+proc real_1(){
+get_real_data("R1=10_C1=2o7_R2=500_woC2_woBB_woCPN.dat")
+LinearCircuit[0].C2=0
+set_BB(0)
+set_CPN(0)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+proc real_2(){
+get_real_data("R1=10_C1=2o7_R2=500_woC2_woBB_CPN=7o012.dat")
+LinearCircuit[0].C2=0
+set_BB(0)
+set_CPN(7.012)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+proc real_3(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=0o746946667_woBB_woCPN.dat")
+LinearCircuit[0].C2=.000746946667
+set_BB(0)
+set_CPN(0)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+proc real_4(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=0o746946667_woBB_CPN=6o973.dat")
+LinearCircuit[0].C2=.000746946667
+set_BB(0)
+set_CPN(6.973)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_5(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=0o746946667_BB=100_CPN=6o973.dat")
+LinearCircuit[0].C2=.000746946667
+set_BB(100)
+set_CPN(6.973)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_6(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=2o815101667_woBB_woCPN.dat")
+LinearCircuit[0].C2=.002815101667
+set_BB(0)
+set_CPN(0)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_7(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=2o815101667_woBB_CPN=6o442.dat")
+LinearCircuit[0].C2=.002815101667
+set_BB(0)
+set_CPN(6.442)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_8(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=2o815101667_BB=44o8_CPN=6o442.dat")
+LinearCircuit[0].C2=.002815101667
+set_BB(44.8)
+set_CPN(6.442)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_9(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=5o0957_woBB_woCPN.dat")
+LinearCircuit[0].C2=.0050957
+set_BB(0)
+set_CPN(0)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_10(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=5o0957_woBB_CPN=6o029.dat")
+LinearCircuit[0].C2=.0050957
+set_BB(0)
+set_CPN(6.029)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_11(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=5o0957_BB=24o8_CPN=6o029.dat")
+LinearCircuit[0].C2=.0050957
+set_BB(24.8)
+set_CPN(6.029)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_12(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=10o22043333_woBB_woCPN.dat")
+LinearCircuit[0].C2=.01022043333
+set_BB(0)
+set_CPN(0)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_13(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=10o22043333_woBB_CPN=5o838.dat")
+LinearCircuit[0].C2=.01022043333
+set_BB(0)
+set_CPN(5.838)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_14(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=10o22043333_BB=16o1_CPN=5o838.dat")
+LinearCircuit[0].C2=.01022043333
+set_BB(16.1)
+set_CPN(5.838)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+
+proc real_15(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=32_woBB_woCPN.dat")
+LinearCircuit[0].C2=.0327667125
+set_BB(0)
+set_CPN(0)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+proc real_16(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=32_woBB_CPFopt.dat")
+LinearCircuit[0].C2=.0327667125
+set_BB(0)
+set_CPN(5.778)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+proc real_17(){
+get_real_data("R1=10_C1=2o7_R2=500_C2=32_BB=10_CPFopt.dat")
+LinearCircuit[0].C2=.0327667125
+set_BB(10)
+set_CPN(5.778)
+Greal.size(8,14,Vreal.min()-8, Vreal.max()+8)
+}
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//////////////////////GUI//////////////////////////////////////////
+
+xpanel("recording configurations")
+				
+				
+                xbutton("C2=0 w/oBB w/oCPN","real_1()")
+                xbutton("C2=0 w/oBB CPN=7o012","real_2()")
+				xlabel("")  		
+                xbutton("C2=0.75 w/oBB w/oCPN","real_3()")  
+                xbutton("C2=0.75 w/oBB CPN=6.973","real_4()")  	
+                xbutton("C2=0.75 BB=100 CPN=6.973","real_5()") 
+                xlabel("")  				
+                xbutton("C2=2.8 w/oBB w/oCPN","real_6()")  			
+                xbutton("C2=2.8 w/oBB CPN=6.442","real_7()")  	
+                xbutton("C2=2.8 BB=44.8 CPN=6.442","real_8()")
+                xlabel("")  
+                xbutton("C2=5.1 w/oBB w/oCPN","real_9()")  			
+                xbutton("C2=5.1 w/oBB CPN=6.029","real_10()")  	
+                xbutton("C2=5.1 BB=24.8 CPN=6.029","real_11()")
+                xlabel("")  
+                xbutton("C2=10.2 w/oBB w/oCPN","real_12()")  			
+                xbutton("C2=10.2 w/oBB CPN=5.838","real_13()")  	
+                xbutton("C2=10.2 BB=16.1 CPN=5.838","real_14()")
+                xlabel("")
+                xbutton("C2=32.8 w/oBB w/oCPN","real_15()")  			
+                xbutton("C2=32.8 w/oBB CPN=5.778","real_16()")  	
+                xbutton("C2=32.8 BB=10 CPN=5.778","real_17()")
+                xlabel("")	
+				
+		
+xpanel(10,200)
+
+
+xpanel("modellcell configurations")
+
+				
+				xlabel("calling an experimental arrangement will automatically adjust")
+				xlabel("compensations to the experimentally-set level")	
+				xlabel("You can adjust the compensatory mechanisms with:")					
+				xlabel("set_BB()")
+				xlabel("the argument is the desired bridge setting in MOhm")
+				xlabel("and with:")					
+				xlabel("set_CPN()")					
+				xlabel("the argument is the desired capacitance neutralization in pF")				
+				
+				xlabel("you can also play with the modellcell:")		
+				xvalue("C_pip (nF)", "LinearCircuit[0].C1")	
+				xvalue("R_access (MOhm)", "LinearCircuit[0].R1")	
+				xvalue("C_cell (nF)", "LinearCircuit[0].C2")				
+				xvalue("R_cell (MOhm)", "LinearCircuit[0].R2")		
+							
+				xlabel("")	
+                xbutton("reset Cpip and Raccess","reSet()")  	
+			
+
+xpanel(1000,200)
+
+proc reSet(){
+LinearCircuit[0].C1=0.00281
+LinearCircuit[0].R1=10
+}
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+/////////////functions to set BB and CPN in the model//////////////
+
+proc set_CPN(){// capacitance neutralization. The argument is the desired compensation in pF
+desired_CPN=$01*0.965
+if (desired_CPN == 0){
+LinearCircuit[0].Acpn_Gain=(1e-9/1000)/LinearCircuit[0].Ccpn
+}else{
+LinearCircuit[0].Acpn_Gain=(desired_CPN/1000)/LinearCircuit[0].Ccpn
+}
+}
+
+proc set_BB(){// bridge balance compensation. The argument is the desired compensation in MOhm.
+desired_BB=$01
+if (desired_BB == 0){
+LinearCircuit[0].A_BB_Gain=1e-9
+}else{
+LinearCircuit[0].A_BB_Gain=desired_BB
+}
+}
+
+
+
+set_filter(100,100)
+
+tstop=14
+dt=0.004
+
+
+
+
