@@ -1,6 +1,6 @@
 # amplifer-model
 
-Uploaded models relate to the manuscript entitled:
+The model relates to the manuscript entitled:
 "Small size of recorded neuronal structures confine the accuracy in direct axonal voltage measurements"
 	Viktor János Oláh, Gergely Tarcsay and János Brunner
 								2021			
