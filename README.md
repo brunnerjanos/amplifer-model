@@ -23,6 +23,7 @@ Folder description:
 			direct axonal voltage recording used for the prediction of native AP 
 			shape and underliing conductances 
 					AP_generator
+					
 4_complete morphology --- a single model session which shows pipette measured, local and native AP waveforms from the simulations in which the
 			contribution of the observer and filtering effects to the instrumental signal distortion was explored. We modelled 
 			recordings with fixed instrumental parameters and compensations but from different parts of a well preserved mossy fiber. 
