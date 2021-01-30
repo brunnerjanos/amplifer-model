@@ -10,8 +10,11 @@ Simulations have been tested using NEURON 7.4-7.6 under Windows10
 Folder description:
 
 1_amplifier construction --- contains three model session to illustrate the tuning of the amplifier model
+
 					predicting Rf associated stray capacitance
+
 					compensations in CC mode
+
 					boosted_VC_circuit
 					
 2_VC and CC operation --- contains two model session in which we show how the model amplifier operates by
