@@ -18,13 +18,16 @@ Folder description:
 					boosted_VC_circuit
 					
 2_VC and CC operation --- contains two model session in which we show how the model amplifier operates by
-			simulating idelaized expereimental conditions  
+			simulating idelaized expereimental conditions
+			
 					current-clamp
+					
 					voltage-clamp
 
 3_real experiment reconstruction --- a single model session which shows the model representation of a 
 			direct axonal voltage recording used for the prediction of native AP 
-			shape and underliing conductances 
+			shape and underliing conductances
+			
 					AP_generator
 					
 4_complete morphology --- a single model session which shows pipette measured, local and native AP waveforms from the simulations in which the
