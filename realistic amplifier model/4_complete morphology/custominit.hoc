@@ -1,0 +1,78 @@
+INITDUR = 50	//350
+tstop = 6
+dt=0.004
+//define pseudo-variables
+
+vsK = 8
+vsNa = 13
+gK = 0.015
+gNa = 0.3
+ihold = -0.46
+scK = 13
+scNa = 13
+
+
+proc setvar(){
+
+	
+
+	forsec all if (ismembrane("hh_mod")) {
+		insert pas
+		Ra=150
+		cm=1
+		g_pas=2e-005
+		ena = 70
+
+		gnabar_hh_mod = gNa
+		gkbar_hh_mod=gK
+		v_shift_na_hh_mod = vsNa
+		v_shift_k_hh_mod = vsK
+		scale_k_hh_mod = scK
+		scale_na_act_hh_mod = scNa
+		scale_na_inact_hh_mod = scNa		
+	}
+	
+	//AIS
+	axon[0].gnabar_hh_mod=gNa*4
+	axon[0].gkbar_hh_mod=gK*5
+	v_shift_na_hh_mod = vsNa-10
+	v_shift_k_hh_mod = vsK-10
+	
+	
+	forsec "dend"{
+		cm=2
+		g_pas=4e-005		
+	}
+	LinearCircuit[0].R_pip_adjust=42.684
+	LinearCircuit[0].Rseal=50000
+  
+	ek = -93
+}
+
+proc init() { local temp
+    
+  setvar()
+
+{dt = 0.05}
+  finitialize(v_init)
+  t = -2*INITDUR // jump to a time "before" 0
+  temp = cvode.active()
+  if (temp != 0) { // if cvode is on, turn it off
+    cvode.active(0)
+    {dt = 0.05}
+  }
+  while (t < -INITDUR) {
+    fadvance()
+  }
+  if (temp != 0) { cvode.active(1) } // turn cvode back on if necessary
+  t = 0
+  {dt = 0.004}
+  if (cvode.active()) {
+    cvode.re_init()
+  } else {
+    fcurrent()
+  }
+  frecord_init()
+
+}
+
