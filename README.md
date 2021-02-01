@@ -9,7 +9,7 @@ Simulations have been tested using NEURON 7.4-7.6 under Windows10
 
 Folder description:
 
-1_amplifier construction --- contains three model session to illustrate the tuning the parameters of the amplifier components
+1_amplifier construction --- tuning the components of the realistic amplifier model 
 
 					predicting Rf associated stray capacitance
 
@@ -17,22 +17,17 @@ Folder description:
 
 					boosted_VC_circuit
 					
-2_VC and CC operation --- contains two model session in which we show how the model amplifier operates by
-			simulating idelaized expereimental conditions
+2_VC and CC operation --- model sessions to show how the model amplifiers operate
 			
 					current-clamp
 					
 					voltage-clamp
 
-3_real experiment reconstruction --- a single model session which shows the model representation of a 
-			direct axonal voltage recording used for the prediction of native AP 
-			shape and underlying conductances
+3_real experiment reconstruction --- The model representation of a direct axonal voltage recording used for the prediction of native AP shape and underlying conductances
 			
 					AP_generator
 					
-4_complete morphology --- a single model session which shows pipette measured, local and native AP waveforms from the simulations in which the
-			contribution of the observer and filtering effects to the instrumental signal distortion was explored. We modelled 
-			recordings with fixed instrumental parameters and compensations but from different parts of a well preserved mossy fiber. 
+4_complete morphology --- pipette-measured, local- and native AP waveforms in simulated recordings from different parts of a mossy fiber. 
 
 
 
