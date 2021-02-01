@@ -9,12 +9,12 @@ present in CC mode
 
 Model cell circuit:
 
-								|---R2(R_cell)----|
-								|				  |
-				|----R1(R_pip)---				  |--|
-				|				|				  |	 |
- CC_input-------|				|---C2(C_cell)----|  |-----GRND
-				|									 |					
+						|---R2(R_cell)----|
+						|		  |
+				|----R1(R_pip)--|		  |--|
+				|		|		  |  |
+ CC_input-----------------------|		|---C2(C_cell)----|  |-----GRND
+				|				     |					
 				|-------------------C1(C_pip)--------|
 				
 
