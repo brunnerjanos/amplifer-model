@@ -3,7 +3,7 @@ Oláh, Tarcsay & Brunner 2021 at KOKI
 CONCEPT:
 This model contains the realistic CC amplifier together with the realistic pipette representation 
 and a biphysically realistic reconstructed mossy fiber. We used this model arrangement to reconstruct
-the recorded APs and to predict native AP parameters.    
+the recorded AP waveforms and to predict native AP parameters.    
 
 This simulation shows some of the recorded data together with their optimalized model representation.
 
