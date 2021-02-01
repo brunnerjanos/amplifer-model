@@ -9,7 +9,7 @@ Simulations have been tested using NEURON 7.4-7.6 under Windows10
 
 Folder description:
 
-1_amplifier construction --- contains three model session to illustrate the tuning of the amplifier model
+1_amplifier construction --- contains three model session to illustrate the tuning the parameters of the amplifier components
 
 					predicting Rf associated stray capacitance
 
