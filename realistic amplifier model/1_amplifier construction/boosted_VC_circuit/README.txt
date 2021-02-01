@@ -1,13 +1,8 @@
 Oláh, Tarcsay & Brunner 2021 at KOKI
 ------------------------------------------------------------
 CONCEPT:
-This model was used to simulate open circuit amplifier (MultiClamp700B) responses in VC mode.
-We used this arrangement to predict size of the injector capacitor of the amplifier and to adjust 
-the frequency profile of the current responses.
-
-Using the amplifier's CC mode, we characterized the amount of Cstray associated with the Rf.
-Rf associated Cstray slows down the amplifier responses in VC mode.
-To restore the speed of the responses, we implemented a high frequency boost unit.  
+This model was used to simulate open circuit amplifier (MultiClamp700B) responses in VC mode. We used this arrangement to predict size of the injector capacitor of the amplifier and to adjust the frequency profile of the current responses. Using the amplifier's CC mode, we characterized the amount of Cstray associated with the Rf.
+Rf associated Cstray slows down the amplifier responses in VC mode and we implemented a high frequency boost unit to restore the speed of the responses.  
 
 This simulation shows the recorded open circuit amplifier response (to -5 mV voltage step) 
 together with the model responses with- or without the boosting unit.
@@ -33,4 +28,4 @@ recorded_data.dat		-experimental data
 
 
 
-note that VC simulations needs high temporal resolution!
+note the need for high temporal resolution for this VC simulations
