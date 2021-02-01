@@ -1,10 +1,7 @@
 Oláh, Tarcsay & Brunner 2021 at KOKI
 ------------------------------------------------------------
 CONCEPT:
-This model contains the realistic CC amplifier together with the realistic pipette representation 
-and a biphysically realistic reconstructed of a somatically labelled, well preserved mossy fiber. We used this
-model arrangement to explore the relative contribution of observer and filtering effects to the overall measurement error.
-For this, we ran simulated experiments with the same instrumental parameters but from different axonal segments. 
+This model contains the realistic CC amplifier together with the realistic pipette representation and a biphysically realistic reconstruction of a somatically labelled, well preserved mossy fiber. We used this model arrangement to explore the relative contribution of observer and filtering effects to the overall measurement error. We ran simulated experiments with the same instrumental parameters but from different axonal segments. 
 This model will show measured/local/native AP waveforms "recorded" from biophysically diverse axonal compartments.      
 
 
