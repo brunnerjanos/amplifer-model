@@ -11,13 +11,10 @@ Model circuit:
 
  CC_input-----------R_load---------------------GRND	
 												
-parasitic capacitances of load resistance were also implemented
+parasitic capacitances of load resistances were also implemented
  
-We varied the load resistance in the actual tests (20, 50 and 100 MOhm). 
-Cstray acts as capacitance neutralization element:
-with 20 and 50 MOhm Rload it actually overcompensates the amplifier's intrinsic 
-capacitance.
-The model was able to replicate this behavior when significant Cstray (0.3-0.5 pF) was applied.
+We varied the load resistance in the actual tests (20, 50 and 100 MOhm). Note that Cstray acts as capacitance neutralization element;
+with 20 and 50 MOhm Rload it actually overcompensates the  intrinsic capacitance of te amplifier. The model was able to replicate this behavior when significant Cstray (0.3-0.5 pF) was applied. 
 
 This simulation shows the recorded data together with the model responses.
 
@@ -38,5 +35,3 @@ Co_Rf.ses			-session file that contains the amplifier representation (a LinearCi
 						the RunControl and some of the graphs
 
 files with .dat extension contain experimental data 
-
-
