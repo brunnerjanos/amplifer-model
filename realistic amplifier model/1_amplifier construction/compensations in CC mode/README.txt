@@ -1,9 +1,7 @@
 Oláh, Tarcsay & Brunner 2021 at KOKI
 ------------------------------------------------------------
 CONCEPT:
-This model was used to simulate a modified 1U modelcell connected to an amplifier 
-(MultiClamp700B) for investigation the properties of the compensatory mechanisms 
-present in CC mode
+This model was used to simulate a modified 1U modelcell connected to an amplifier (MultiClamp700B) for investigation the properties of the compensatory mechanisms present in CC mode
 
 
 
@@ -18,13 +16,7 @@ Model cell circuit:
 				|-------------------C1(C_pip)--------|
 				
 
-We systematically varied cellular capacitance (C2), and recorded the voltage signals 
-with and without optimal bridge balance (BB) and capacitance compensation (CPN) 
-in the actual tests. 
-The other modelcell parameters (R1=10 MOhm, C1=2.8 pF, R2=500 MOhm) were held constant.
-
-This simulation shows some of the recorded data together with the responses of the 
-optimalized model.
+We systematically varied cellular capacitance (C2), and recorded the voltage signals with and without optimal bridge balance (BB) and capacitance compensation (CPN) in the actual tests. The other modelcell parameters (R1=10 MOhm, C1=2.8 pF, R2=500 MOhm) were held constant. This simulation shows some of the recorded data together with the responses of the optimalized model.
 
 
 
