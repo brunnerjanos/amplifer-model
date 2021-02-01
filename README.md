@@ -26,7 +26,7 @@ Folder description:
 
 3_real experiment reconstruction --- a single model session which shows the model representation of a 
 			direct axonal voltage recording used for the prediction of native AP 
-			shape and underliing conductances
+			shape and underlying conductances
 			
 					AP_generator
 					
