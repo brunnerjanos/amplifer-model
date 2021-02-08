@@ -17,6 +17,9 @@ Folder description:
 
 					boosted_VC_circuit
 					
+					filter_set
+					
+					
 2_VC and CC operation --- model sessions to show how the model amplifiers operate
 			
 					current-clamp
