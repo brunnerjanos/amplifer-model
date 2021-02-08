@@ -31,10 +31,8 @@ Folder description:
 					AP_generator
 					
 4_complete morphology --- pipette-measured, local- and native AP waveforms in simulated recordings from different parts of a mossy fiber. 
-
-
-
-
-
+ 
+ 
+ 
 Any feedbacks, questions or bug reports can be sent to: 
 brunner.janos at koki.hu
