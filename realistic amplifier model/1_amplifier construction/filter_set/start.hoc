@@ -1,0 +1,525 @@
+load_file("nrngui.hoc")
+load_file("VC_boost.ses")
+load_file("filter_settings.hoc")
+
+
+
+//plot for the model amplifier current signal overlaid with the experimental data:
+objref Greal, Vreal, real_data
+Greal=new Graph()
+Greal.unmap()
+Greal.view(8, -15, 6, 22, 455, 10, 400, 300)
+Greal.addvar("Imon_boosted_filtered (pA)", &LinearCircuit[0].V_Imon_boosted_filtered, 4,3)//with the conversion factor of 1 V/nA
+
+graphList[0].append(Greal)
+
+
+//read experimental data
+proc get_real_data(){
+Vreal = new Vector()		
+real_data=new File()
+real_data.ropen($s01)
+Vreal.scanf(real_data)
+Vreal.plot(Greal,.004)
+}
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+
+
+proc set_Cp_fast(){//apply Cpfast compensation. 1st argument is the desired compensation in pF, 2nd arg is the time constant for compensation
+if (CPfast<=0){LinearCircuit[0].A_fast_Gain=1e-9
+}else{
+LinearCircuit[0].A_fast_Gain=CPfast/16.15}
+LinearCircuit[0].R_fast=CPfast_tau
+}
+proc set_Cp_slow(){//apply Cpslow compensation. 1st argument is the desired compensation in pF, 2nd arg is the time constant for compensation
+if (CPslow==0){LinearCircuit[0].A_slow_Gain=1e-9
+}else{
+LinearCircuit[0].A_slow_Gain=CPslow/16.15/6}
+LinearCircuit[0].R_slow=CPslow_tau
+}
+
+proc set_Cp_comp(){//combined Cpfast/Cpslow compensation 
+CPfast=$01
+CPfast_tau=$02
+CPslow=$03
+CPslow_tau=$04
+set_Cp_fast()
+set_Cp_slow()
+}
+
+
+
+
+
+
+///////////////////////////////////////////////////////////////////
+///////////////////////////////////////////////////////////////////
+//////////////////////GUI//////////////////////////////////////////
+
+get_real_data("../filter_set/test_1/wofilter.dat")
+graphymin1=Vreal.min()-200
+graphymax1=Vreal.max()+200
+
+get_real_data("../filter_set/modelcell/wofilter.dat")
+graphymin2=Vreal.min()-200
+graphymax2=Vreal.max()+200
+
+set_filter(100)
+
+
+proc wo(){
+get_real_data("../filter_set/test_1/wofilter.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6
+set_filter(100)
+set_Cp_comp(0,0,0,0)
+}
+proc _30k(){
+get_real_data("../filter_set/test_1/30k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6 
+set_filter(30)
+set_Cp_comp(0,0,0,0)
+}
+proc _28k(){
+get_real_data("../filter_set/test_1/28k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(28)
+set_Cp_comp(0,0,0,0)
+}
+proc _26k(){
+get_real_data("../filter_set/test_1/26k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(26)
+set_Cp_comp(0,0,0,0)
+}
+proc _24k(){
+get_real_data("../filter_set/test_1/24k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(24)
+set_Cp_comp(0,0,0,0)
+}
+proc _22k(){
+get_real_data("../filter_set/test_1/22k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(22)
+set_Cp_comp(0,0,0,0)
+}
+proc _20k(){
+get_real_data("../filter_set/test_1/20k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(20)
+set_Cp_comp(0,0,0,0)
+}
+proc _18k(){
+get_real_data("../filter_set/test_1/18k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(18)
+set_Cp_comp(0,0,0,0)
+}
+proc _16k(){
+get_real_data("../filter_set/test_1/16k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(16)
+set_Cp_comp(0,0,0,0)
+}
+proc _14k(){
+get_real_data("../filter_set/test_1/14k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(14)
+set_Cp_comp(0,0,0,0)
+}
+proc _12k(){
+get_real_data("../filter_set/test_1/12k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(12)
+set_Cp_comp(0,0,0,0)
+}
+proc _10k(){
+get_real_data("../filter_set/test_1/10k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(10)
+set_Cp_comp(0,0,0,0)
+}
+proc _8k(){
+get_real_data("../filter_set/test_1/8k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(8)
+set_Cp_comp(0,0,0,0)
+}
+proc _6k(){
+get_real_data("../filter_set/test_1/6k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(6)
+set_Cp_comp(0,0,0,0)
+}
+proc _4k(){
+get_real_data("../filter_set/test_1/4k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(4)
+set_Cp_comp(0,0,0,0)
+}
+proc _3k(){
+get_real_data("../filter_set/test_1/3k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(3)
+set_Cp_comp(0,0,0,0)
+}
+proc _2k(){
+get_real_data("../filter_set/test_1/2k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(2)
+set_Cp_comp(0,0,0,0)
+}
+proc _1k(){
+get_real_data("../filter_set/test_1/1k.dat")
+Greal.size(7.6,7.8,graphymin1, graphymax1)
+LinearCircuit[0].Cpip=0
+LinearCircuit[0].Ccell=0
+LinearCircuit[0].Rpip=1e6
+LinearCircuit[0].Rcell=1e-6  
+set_filter(1)
+set_Cp_comp(0,0,0,0)
+}
+
+
+xpanel("recording configurations_test_1")
+				
+				xlabel("recording configuration: test #1 circuit")
+                xlabel("the intrinsic capacitance of the amplifier")
+                xlabel("generates an extremely short current response at the onset of") 
+				xlabel("the command step (-5 mV). This response is highly")
+                xlabel("sensitive to the applied signal conditioning (filtering)")	
+                xlabel("")						
+                xlabel("simulations below allow for the comparison of the ")	
+                xlabel("differently filtered measurements with their modelled counterparts ")
+                xlabel("")
+				xlabel("")
+				xbutton("wofilter","wo()")
+                xbutton("30kHz","_30k()")
+				xbutton("28kHz","_28k()")
+				xbutton("26kHz","_26k()")
+				xbutton("24kHz","_24k()")
+				xbutton("22kHz","_22k()")
+				xbutton("20kHz","_20k()")
+				xbutton("18kHz","_18k()")
+				xbutton("16kHz","_16k()")
+				xbutton("14kHz","_14k()")
+				xbutton("12kHz","_12k()")
+				xbutton("10kHz","_10k()")
+				xbutton("8kHz","_8k()")
+				xbutton("6kHz","_6k()")
+				xbutton("4kHz","_4k()")
+				xbutton("3kHz","_3k()")
+				xbutton("2kHz","_2k()")
+				xbutton("1kHz","_1k()")
+
+                xlabel("")	
+				
+		
+xpanel(10,120)
+
+proc set_mc(){
+get_real_data("../filter_set/modelcell/wocomp.dat")
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500
+set_Cp_comp(4.114,.95,0,0)
+set_filter(100)
+}
+
+
+proc wo_mc(){
+get_real_data("../filter_set/modelcell/wofilter.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500
+set_filter(100)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _30k_mc(){
+get_real_data("../filter_set/modelcell/30k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500
+set_filter(30)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _28k_mc(){
+get_real_data("../filter_set/modelcell/28k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(28)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _26k_mc(){
+get_real_data("../filter_set/modelcell/26k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(26)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _24k_mc(){
+get_real_data("../filter_set/modelcell/24k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(24)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _22k_mc(){
+get_real_data("../filter_set/modelcell/22k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(22)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _20k_mc(){
+get_real_data("../filter_set/modelcell/20k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(20)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _18k_mc(){
+get_real_data("../filter_set/modelcell/18k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(18)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _16k_mc(){
+get_real_data("../filter_set/modelcell/16k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(16)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _14k_mc(){
+get_real_data("../filter_set/modelcell/14k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(14)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _12k_mc(){
+get_real_data("../filter_set/modelcell/12k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(12)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _10k_mc(){
+get_real_data("../filter_set/modelcell/10k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(10)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _8k_mc(){
+get_real_data("../filter_set/modelcell/8k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(8)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _6k_mc(){
+get_real_data("../filter_set/modelcell/6k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(6)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _4k_mc(){
+get_real_data("../filter_set/modelcell/4k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(4)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _3k_mc(){
+get_real_data("../filter_set/modelcell/3k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(3)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _2k_mc(){
+get_real_data("../filter_set/modelcell/2k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(2)
+set_Cp_comp(4.114,.95,0,0)
+}
+proc _1k_mc(){
+get_real_data("../filter_set/modelcell/1k.dat")
+Greal.size(7.5,8.5,graphymin2, graphymax2)
+LinearCircuit[0].Cpip=.0023
+LinearCircuit[0].Ccell=0.0312
+LinearCircuit[0].Rpip=10
+LinearCircuit[0].Rcell=500 
+set_filter(1)
+set_Cp_comp(4.114,.95,0,0)
+}
+
+xpanel("recording configurations_modelcelll")
+				xlabel("recording configuration: 1U modelcell")
+                xlabel("idealized modelcell parameters are tuned to reproduce")
+                xlabel("the unfiltered VC responses (to -5 mV step) in the model") 
+				xlabel("Cpip=2.3 pF")
+				xlabel("Ccell=31.2 pF")
+				xlabel("Rpip=10 MOhm")
+				xlabel("Rcell=500 MOhm")	
+                xlabel("")
+				xlabel("the experimentally set capacitance compensation was applied in the model")						
+				xlabel("Cpfast:4.114 pF,Cpfast tau= 0.95 us, without Cp slow compensation")				
+                xlabel("")				
+                xlabel("simulations below allow for the comparison of the ")	
+                xlabel("differently filtered measurements with their modelled counterparts ")
+                xlabel("")
+				
+                xbutton("wofilter","wo_mc()")
+                xbutton("30kHz","_30k_mc()")
+				xbutton("28kHz","_28k_mc()")
+				xbutton("26kHz","_26k_mc()")
+				xbutton("24kHz","_24k_mc()")
+				xbutton("22kHz","_22k_mc()")
+				xbutton("20kHz","_20k_mc()")
+				xbutton("18kHz","_18k_mc()")
+				xbutton("16kHz","_16k_mc()")
+				xbutton("14kHz","_14k_mc()")
+				xbutton("12kHz","_12k_mc()")
+				xbutton("10kHz","_10k_mc()")
+				xbutton("8kHz","_8k_mc()")
+				xbutton("6kHz","_6k_mc()")
+				xbutton("4kHz","_4k_mc()")
+				xbutton("3kHz","_3k_mc()")
+				xbutton("2kHz","_2k_mc()")
+				xbutton("1kHz","_1k_mc()")
+
+                xlabel("")	
+				
+		
+xpanel(1000,50)
+
+
+get_real_data("../filter_set/test_1/wofilter.dat")
