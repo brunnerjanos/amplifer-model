@@ -1,4 +1,17 @@
-TITLE hh.mod   squid sodium, potassium, and leak channels
+TITLE hh_mod.mod   squid sodium, potassium, and leak channels
+ 
+ 
+: Modified from NEURON's built-in hh.mod 
+: 2021, Janos Brunner
+:
+: relates to the publication:
+: "Small size of recorded neuronal structures confines the accuracy in direct axonal voltage measurements" 
+: by Viktor Janos Olah, Gergely Tarcsay and Janos Brunner 
+: ENEURO.0059-21.2021
+
+
+: scale_na_act, scale_na_inact, scale_k, v_shift_na, v_shift_k are introduced
+ 
  
 COMMENT
  This is the original Hodgkin-Huxley treatment for the set of sodium, 
